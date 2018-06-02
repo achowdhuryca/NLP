@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Jun  1 10:52:57 2018
-
 @author: amin
 """
 
@@ -103,8 +101,6 @@ print('\n')
 print(classification_report(y_test,predictions))
 
 
-
-
 # Fitting Naive Bayes to the Training set
 from sklearn.naive_bayes import GaussianNB
 classifier = GaussianNB()
@@ -114,16 +110,6 @@ classifier.fit(X_train, y_train)
 # Predicting the Test set results
 y_pred = classifier.predict(X_test)
 
-from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(y_test, y_pred)
-
-cm = np.array([[2,1,0], [3,4,5], [6,7,8]])
-true_pos = np.diag(cm)
-false_pos = np.sum(cm, axis=0) - true_pos
-false_neg = np.sum(cm, axis=1) - true_pos
- 
-precision = np.sum(true_pos / true_pos+false_pos)
-recall = np.sum(true_pos / true_pos + false_neg)
 
 
 
@@ -133,35 +119,7 @@ recall = np.sum(true_pos / true_pos + false_neg)
 
 
 
-#Using Text Processing
 
-from sklearn.feature_extraction.text import  TfidfTransformer
-from sklearn.pipeline import Pipeline
-
-#create a pipeline
-
-pipeline = Pipeline([
-    ('bow', CountVectorizer()),  # strings to token integer counts
-    ('tfidf', TfidfTransformer()),  # integer counts to weighted TF-IDF scores
-    ('classifier', MultinomialNB()),  # train on TF-IDF vectors w/ Naive Bayes classifier
-])
-
-# Train Test Split
-X = yelp_class['text']
-y = yelp_class['stars']
-X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.3,random_state=101)
-
-
-#fit the pipeline to the training data
-
-pipeline.fit(X_train,y_train)
-
-#Predictions and Evaluation
-
-predictions = pipeline.predict(X_test)
-
-print(confusion_matrix(y_test,predictions))
-print(classification_report(y_test,predictions))
 
 
 
